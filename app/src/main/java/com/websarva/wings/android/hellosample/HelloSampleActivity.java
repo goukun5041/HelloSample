@@ -37,6 +37,10 @@ public class HelloSampleActivity extends AppCompatActivity {
         //表示ボタンにリスナを設定
         btClick.setOnClickListener(listener);
 
+        //クリアボタンであるButtonpブジェクト取得
+        Button btclear = (Button) findViewById(R.id.btClear);
+        //クリアボタンにリスナ設定
+        btclear.setOnClickListener(listener);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -87,10 +91,26 @@ public class HelloSampleActivity extends AppCompatActivity {
             EditText input = (EditText)findViewById(R.id.etName);
             //メッセージを表示するTwxtViewオブジェクト取得
             TextView output = (TextView)findViewById(R.id.tvOutput);
-            //入力されたら名前文字列を取得
-            String inputStr = input.getText().toString();
-            //メッセージを表示
-            output.setText(inputStr + "さん、こんにちは！");
+
+            //タップされた画面部品のidのR値を取得
+            int id = view.getId();
+            //idのR値に応じて処理分岐
+            switch (id) {
+                //表示ボタンの場合
+                case R.id.btClick:
+                    //入力されたら名前文字列を取得
+                    String inputStr = input.getText().toString();
+                    //メッセージを表示
+                    output.setText(inputStr + "さん、こんにちは！");
+                    break;
+                //クリアボタンの場合
+                case R.id.btClear:
+                    //名前入力欄を空白にする
+                    input.setText("");
+                    //メッセージ欄を空白にする
+                    output.setText("");
+                    break;
+            }
         }
     }
 }
